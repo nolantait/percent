@@ -2,18 +2,18 @@ require "bigdecimal"
 require "bigdecimal/util"
 
 class Percentage < Numeric
-  def initialize(val = 0, options = {})
-    val ||= 0.0
-    val = 1.0            if val == true
-    val = val.to_r       if val.is_a?(String) && val["/"]
-    val = val.to_f       if val.is_a?(Complex) || val.is_a?(Rational)
-    val = val.to_i       if val.is_a?(String) && !val["."]
-    if val.is_a?(Integer) || (val.is_a?(String) && val["%"])
-      val = val.to_d / 100
+  def initialize(value = 0)
+    value = 0.0              if value.nil? || value == false
+    value = 1.0              if value == true
+    value = value.to_r       if value.is_a?(String) && value["/"]
+    value = value.to_f       if value.is_a?(Complex) || value.is_a?(Rational)
+    value = value.to_i       if value.is_a?(String) && !value["."]
+    if value.is_a?(Integer) || (value.is_a?(String) && value["%"])
+      value = value.to_d / 100
     end
-    val = val.value if val.is_a? self.class
+    value = value.value if value.is_a? self.class
 
-    @value = val.to_d
+    @value = value.to_d
   end
 
   ###
@@ -45,9 +45,9 @@ class Percentage < Numeric
   ###
   def to_s = to_amount.to_s
   def to_str = to_f.to_s
-  def to_string = to_s(+"%")
+  def to_string = "#{self}%"
 
-  def format(options = {})
+  def format(**options)
     # set defaults; all other options default to false
     options[:percent_sign] = options.fetch :percent_sign, true
 
@@ -112,18 +112,21 @@ class Percentage < Numeric
   ###
   # Additional initialization methods
   ###
-  def self.from_fraction(val = 0, options = {})
-    val = val.to_i if val.is_a?(String) && !(val["/"] || val["%"] || val["."])
-    val = val.to_d if val.is_a?(Integer)
+  def self.from_fraction(value = 0)
+    if value.is_a?(String) && !(value["/"] || value["%"] || value["."])
+      value = value.to_i
+    end
 
-    new val, options
+    value = value.to_d if value.is_a?(Integer)
+
+    new value
   end
 
-  def self.from_amount(val = 0, options = {})
-    val = val.to_r  if val.is_a?(String) && val["/"]
-    val = val.to_d  if val.is_a?(String)
-    val /= 100 if val.is_a?(Numeric) && !val.integer?
+  def self.from_amount(value = 0)
+    value = value.to_r  if value.is_a?(String) && value["/"]
+    value = value.to_d  if value.is_a?(String)
+    value /= 100 if value.is_a?(Numeric) && !value.integer?
 
-    new val, options
+    new value
   end
 end
