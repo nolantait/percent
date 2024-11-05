@@ -1,12 +1,11 @@
-require 'percent'
-require 'active_record'
-require 'bigdecimal'
+require "./config/boot"
 
-ActiveRecord::Base.establish_connection(adapter: 'sqlite3',
-                                        database: File.dirname(__FILE__) + '/percent.sqlite3')
+ActiveRecord::Base.establish_connection(
+  adapter: "sqlite3",
+  database: Pathname(__FILE__).dirname.join("percent.sqlite3")
+)
 
 Percent::Hooks.init
 
-load File.dirname(__FILE__) + '/support/schema.rb'
-load File.dirname(__FILE__) + '/support/models.rb'
-# load File.dirname(__FILE__) + '/support/data.rb'
+load Pathname(__FILE__).dirname.join("support/schema.rb")
+load Pathname(__FILE__).dirname.join("support/models.rb")
