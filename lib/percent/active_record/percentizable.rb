@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Percent
   module ActiveRecord
     module Percentizable
@@ -17,7 +19,7 @@ module Percent
             elsif /_fraction$/.match?(column_name)
               column_name.sub(/_fraction$/, "")
             else
-              column_name + "_percent"
+              "#{column_name}_percent"
             end
 
             # validation

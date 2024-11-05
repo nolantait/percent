@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "./config/boot"
 
 require "debug"
