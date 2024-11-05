@@ -4,3 +4,10 @@ require:
 inherit_gem:
   rubocop-inhouse:
     - config/default.yml
+
+Lint/NumberConversion:
+  Enabled: false
+
+Lint/BinaryOperatorWithIdenticalOperands:
+  Exclude:
+    - spec/**/*.rb
