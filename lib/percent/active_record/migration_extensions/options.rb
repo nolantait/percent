@@ -6,12 +6,13 @@ module Percent
           field = accessor.to_s.gsub("_fraction", "")
           column_name = "#{field}_fraction"
 
-          [column_name, :decimal, { null: null, default: default }]
+          [column_name, :decimal, { null:, default: }]
         end
 
         def self.with_table(table_name, accessor, **options)
-          options = without_table accessor, **options
-          options.unshift table_name
+          column_name, type, options = without_table(accessor, **options)
+
+          [table_name, column_name, type, options]
         end
       end
     end
