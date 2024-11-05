@@ -1,9 +1,7 @@
-require 'percentage'
-require 'percent/hooks'
+require "percentage"
+require "percent/hooks"
 
 module Percent
 end
 
-if defined? Rails
-  require 'percent/railtie'
-end
+require "percent/railtie" if defined? Rails
