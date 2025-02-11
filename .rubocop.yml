@@ -5,6 +5,9 @@ inherit_gem:
   rubocop-inhouse:
     - config/default.yml
 
+AllCops:
+  TargetRubyVersion: 3.2
+
 Lint/NumberConversion:
   Enabled: false
 
